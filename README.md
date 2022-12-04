@@ -29,7 +29,7 @@ Within Python Virtual Environment:
 2. Run `python3 info.py` manually once to bot setup and get its access token to Mastodon instance.
 
 3. Use your favourite scheduling method to set `info.sh` to run every minute. For example, 
-   add  `* * * * * /home/mastostatus/code/info.sh >/dev/null 2>&1` in 
+   add  `* * * * * /home/mastostatus/code/info.sh 2>&1 | /usr/bin/logger -t MASTOSTATUS` in 
    `crontab -e`. The system and error log will be in `/var/log/syslog`. Don't forgot the execution 
    privilegies `chmod +x info.sh`.
 
