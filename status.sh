@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd /home/mastostatus/
+cd /home/user_name/mastostatus/
 
 python3 status.py

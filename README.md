@@ -24,12 +24,15 @@ Registration Opened/Closed
 
 Within Python Virtual Environment:
 
-1. Run `pip install -r requirements.txt` to install needed libraries.  
+1. Clone the repository `git clone https://github.com/lgbaixauli/mastostatus.git` 
 
-2. Run `python3 status.py` manually once to bot setup and get its access token to Mastodon instance.
+2. Run `pip install -r requirements.txt` to install needed libraries.  
 
-3. Use your favourite scheduling method to set `info.sh` to run every minute. For example, 
-   add  `* * * * * /home/mastostatus/status.sh 2>&1 | /usr/bin/logger -t MASTOSTATUS` in 
-   `crontab -e`. The system and error log will be in `/var/log/syslog`. Don't forgot the execution 
-   privilegies `chmod +x info.sh`.
+3. Run `python3 status.py` manually once to bot setup and get its access token to Mastodon instance.
+
+4. Use your favourite scheduling method to set `status.sh` to run every minute. For example, 
+   add  `* * * * * /home/user_name/mastostatus/status.sh 2>&1 | /usr/bin/logger -t MASTOSTATUS` in 
+   `crontab -e`. The system and error log will be in `/var/log/syslog`. 
+   Don't forgot the execution privilegies `chmod +x info.sh`. 
+   Don't forgot update the user_name in `status.sh`  
 
