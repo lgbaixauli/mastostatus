@@ -1,3 +1,7 @@
+###
+# Mastobot, clase sobre mastodon.py orientada a hacer bots
+###
+
 from mastodon import Mastodon
 from mastodon.Mastodon import MastodonMalformedEventError, MastodonNetworkError, MastodonReadTimeout, MastodonAPIError, MastodonIllegalArgumentError
 import getpass
@@ -12,16 +16,20 @@ import os.path
 # Defined at top level so it can be pickled.
 ###
 class AttribAccessDict(dict):
+
     def __getattr__(self, attr):
+
         if attr in self:
             return self[attr]
         else:
             raise AttributeError("Attribute not found: " + str(attr))
 
     def __setattr__(self, attr, val):
+
         if attr in self:
             raise AttributeError("Attribute-style access is read only")
         super(AttribAccessDict, self).__setattr__(attr, val)
+
 
 class Mastobot:
 
@@ -34,150 +42,28 @@ class Mastobot:
         is_setup = self.check_setup(file_path)
 
         if is_setup:
-
-            self.uc_client_id     = self.get_parameter("uc_client_id",     file_path)
-            self.uc_client_secret = self.get_parameter("uc_client_secret", file_path)
-            self.uc_access_token  = self.get_parameter("uc_access_token",  file_path)
-            
             self.mastodon, self.mastodon_hostname = self.log_in(self)
-
         else:
-
             while(True):
-
                 logged_in, self.mastodon, self.mastodon_hostname = self.setup()
 
                 if not logged_in:
-
                     print("\nLog in failed! Try again.\n")
-
                 else:
-
                     break
 
-    def get_data(self, notif):
 
-        id = notif.id
+    @staticmethod
+    def check_setup(file_path):
 
-        account_id = notif.account.id
+        is_setup = False
 
-        username = notif.account.acct
-
-        status_id = notif.status.id
-
-        text  = notif.status.content
-
-        visibility = notif.status.visibility
-
-        reply, question = self.get_question(self, text)
-
-        mention_dict = {'reply': reply, 'question': question, 'id': id, 'account_id': account_id, 'username': username, 'status_id': status_id, 'text': text, 'visibility': visibility}
-
-        mention = self.__json_allow_dict_attrs(mention_dict)
-
-        return mention
-
-    def post(self, mention):
-
-        mau = self.mastodon.instance_nodeinfo().usage.users.activeMonth
-
-        mau = '{:,}'.format(mau).replace(',','.')
-
-        registers = self.mastodon.instance().stats.user_count
-
-        registers = '{:,}'.format(registers).replace(',','.')
-
-        posts = self.mastodon.instance().stats.status_count
-
-        posts = '{:,}'.format(posts).replace(',','.')
-
-        peers = self.mastodon.instance().stats.domain_count
-
-        peers = '{:,}'.format(peers).replace(',','.')
-
-        version = self.mastodon.instance().version
-
-        reg_open = self.mastodon.instance_nodeinfo().openRegistrations
-
-        if reg_open:
-
-            opened = 'abierto'
-
+        if not os.path.isfile(file_path):
+            print(f"File {file_path} not found, running setup.")
+            return
         else:
-
-            opened = 'cerrado'
-
-        post_text  = f"@{mention.username}, estado de {self.mastodon_hostname}:\n\n"
-        post_text += f"Usuarios registrados: {registers}\n"
-        post_text += f"Usuarios activos (en el mes): {mau}\n"
-        post_text += f"Apuntes: {posts}\n"
-        post_text += f"Servidores federados: {peers}\n"
-        post_text += f"Versión de Mastodon: v{version}\n"
-        post_text += f"Registro: {opened} \n\n"
-        post_text += f"(Mencióname con la palabra 'frikistatus' y te responderé con estos datos)"
-
-        post_text = (post_text[:400] + '... ') if len(post_text) > 400 else post_text
-
-        self.mastodon.status_post(post_text, in_reply_to_id=mention.status_id,visibility=mention.visibility)
-
-        print(f'Replied notification {mention.id}')
-
-        self.mastodon.notifications_dismiss(mention.id)
-
-    @staticmethod
-    def __json_allow_dict_attrs(json_object):
-        """
-        Makes it possible to use attribute notation to access a dicts
-        elements, while still allowing the dict to act as a dict.
-        """
-        if isinstance(json_object, dict):
-            return AttribAccessDict(json_object)
-        return json_object
-
-    @staticmethod
-    def get_question(self, text):
-
-        reply = False
-
-        keyword = '' 
-
-        content = self.cleanhtml(self, text)
-
-        content = self.unescape(self, content)
-
-        try:
-
-            start = content.index("@")
-            end = content.index(" ")
-            if len(content) > end:
-
-                content = content[0: start:] + content[end +1::]
-
-            cleanit = content.count('@')
-
-            i = 0
-            while i < cleanit :
-
-                start = content.rfind("@")
-                end = len(content)
-                content = content[0: start:] + content[end +1::]
-                i += 1
-
-            content = content.lower()
-            question = content
-
-            keyword_length = 11
-            keyword = 'frikistatus'
-
-            if unidecode.unidecode(question)[0:keyword_length] == keyword:
-
-                reply = True
-
-        except:
-
-            pass
-
-        return (reply, question)
+            is_setup = True
+            return is_setup
 
     @staticmethod
     def log_in(self):
@@ -201,17 +87,6 @@ class Mastobot:
 
         return (self.mastodon, self.mastodon_hostname)
 
-    @staticmethod
-    def check_setup(file_path):
-
-        is_setup = False
-
-        if not os.path.isfile(file_path):
-            print(f"File {file_path} not found, running setup.")
-            return
-        else:
-            is_setup = True
-            return is_setup
 
     @staticmethod
     def get_parameter(parameter, file_path ):
@@ -224,6 +99,73 @@ class Mastobot:
         print(f'{file_path} Missing parameter {parameter}')
         sys.exit(0)
 
+
+    def get_mention(self, notif, keyword):
+
+        id         = notif.id
+        account_id = notif.account.id
+        username   = notif.account.acct
+        status_id  = notif.status.id
+        text       = notif.status.content
+        visibility = notif.status.visibility
+
+        reply, question = self.check_keyword(self, text, keyword)
+
+        mention_dict = {'reply': reply, 'question': question, 'id': id, 'account_id': account_id, 'username': username, 'status_id': status_id, 'text': text, 'visibility': visibility}
+
+        mention = self.__json_allow_dict_attrs(mention_dict)
+
+        return mention
+
+
+    @staticmethod
+    def __json_allow_dict_attrs(json_object):
+        """
+        Makes it possible to use attribute notation to access a dicts
+        elements, while still allowing the dict to act as a dict.
+        """
+        if isinstance(json_object, dict):
+            return AttribAccessDict(json_object)
+        return json_object
+
+
+    @staticmethod
+    def check_keyword(self, text, keyword):
+
+        reply = False
+
+        content = self.cleanhtml(self, text)
+        content = self.unescape(self, content)
+
+        try:
+            start = content.index("@")
+            end = content.index(" ")
+            if len(content) > end:
+                content = content[0: start:] + content[end +1::]
+
+            cleanit = content.count('@')
+
+            i = 0
+            while i < cleanit :
+                start = content.rfind("@")
+                end = len(content)
+                content = content[0: start:] + content[end +1::]
+                i += 1
+
+            content = content.lower()
+            question = content
+
+            keyword_length = len(keyword)
+
+            if unidecode.unidecode(question)[0:keyword_length] == keyword:
+                reply = True
+
+        except:
+            pass
+
+        return (reply, question)
+
+
     @staticmethod
     def cleanhtml(self, raw_html):
 
@@ -231,11 +173,26 @@ class Mastobot:
         cleantext = re.sub(cleanr, '', raw_html)
         return cleantext
 
+
     @staticmethod
     def unescape(self, s):
 
         s = s.replace("&apos;", "'")
         return s
+
+
+    def replay(self, mention, aux_text):
+
+        post_text  = f"@{mention.username}{aux_text}"
+
+        post_text = (post_text[:400] + '... ') if len(post_text) > 400 else post_text
+
+        self.mastodon.status_post(post_text, in_reply_to_id=mention.status_id,visibility=mention.visibility)
+
+        # print(f'Replied notification {mention.id}')
+
+        self.mastodon.notifications_dismiss(mention.id)
+
 
     @staticmethod
     def modify_file(self, file_name, pattern,value=""):
@@ -249,6 +206,7 @@ class Mastobot:
             sys.stdout.write(line)
 
         fh.close()
+
 
     def setup(self):
 
