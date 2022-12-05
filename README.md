@@ -35,6 +35,6 @@ Within Python Virtual Environment:
 5. Use your favourite scheduling method to set `status.sh` to run every minute. For example, 
    add  `* * * * * /home/user_name/mastostatus/status.sh 2>&1 | /usr/bin/logger -t MASTOSTATUS` in 
    `crontab -e`. The system and error log will be in `/var/log/syslog`. 
-   Don't forgot the execution privilegies `chmod +x info.sh`. 
+   Don't forgot the execution privilegies `chmod +x status.sh`. 
    Don't forgot update the user_name in `status.sh`  
 
