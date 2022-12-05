@@ -60,7 +60,6 @@ if __name__ == '__main__':
             if mention.reply:
 
                 text_post = replay_text()
-                print(f"text: {text_post}")
 
                 bot.replay(mention, text_post)
 
