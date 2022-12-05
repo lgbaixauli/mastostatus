@@ -1,6 +1,6 @@
 # Info
 This code publish information of the Mastodon instance where the bot has its account, if requested.  
-Based in the info bot of @spla@mastodont.cat (https://git.mastodont.cat/spla/info)
+Based in the 'info' bot of @spla@mastodont.cat (https://git.mastodont.cat/spla/info)
 
 The bot listen to 'frikistatus' word key:
 
@@ -26,10 +26,10 @@ Within Python Virtual Environment:
 
 1. Run `pip install -r requirements.txt` to install needed libraries.  
 
-2. Run `python3 info.py` manually once to bot setup and get its access token to Mastodon instance.
+2. Run `python3 status.py` manually once to bot setup and get its access token to Mastodon instance.
 
 3. Use your favourite scheduling method to set `info.sh` to run every minute. For example, 
-   add  `* * * * * /home/mastostatus/code/info.sh 2>&1 | /usr/bin/logger -t MASTOSTATUS` in 
+   add  `* * * * * /home/mastostatus/status.sh 2>&1 | /usr/bin/logger -t MASTOSTATUS` in 
    `crontab -e`. The system and error log will be in `/var/log/syslog`. Don't forgot the execution 
    privilegies `chmod +x info.sh`.
 

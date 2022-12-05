@@ -2,4 +2,4 @@
 
 cd /home/mastostatus/
 
-python3 info.py
+python3 status.py
