@@ -1,10 +1,11 @@
-# Info
+# Mastostatus
+
 This code publish information of the Mastodon instance where the bot has its account, if requested.  
 Based in the 'info' bot of @spla@mastodont.cat (https://git.mastodont.cat/spla/info)
 
-The bot listen a keyword key:
+The bot listen to a keyword:
 
-@bot_username kewword
+@bot_username keyword
 
 and then reply following information:  
 
@@ -30,7 +31,7 @@ Within Python Virtual Environment:
 
 3. Run `pip install -r requirements.txt` to install needed libraries.  
 
-4. Choose the keyword an modify the `status.py` file.
+4. Modify options in the `config.yaml` file. Fer exemple, the keyword or directories and files names.
 
 5. Run `python3 status.py` manually once to bot setup and get its access token to Mastodon instance.
 
@@ -39,4 +40,3 @@ Within Python Virtual Environment:
    `crontab -e`. The system and error log will be in `/var/log/syslog`. 
    Don't forgot the execution privilegies `chmod +x status.sh`. 
    Don't forgot update the user_name in `status.sh`  
-
