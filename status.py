@@ -35,7 +35,7 @@ class Runner:
                 mention = bot.get_mention(notif, keyword)
 
             if mention.reply:
-                text_post = self.replay_text(keyword)
+                text_post = self.replay_text(bot, keyword)
                 self._logger.debug ("answersing with\n" + text_post)
 
                 if not self._config.get("testing.disable_push_answer"):
@@ -48,30 +48,30 @@ class Runner:
 
         self._logger.info("end")
 
-    def replay_text(self, keyword):        
+    def replay_text(self, bot, keyword):        
     
-        mau = self.bot.mastodon.instance_nodeinfo().usage.users.activeMonth
+        mau = bot.mastodon.instance_nodeinfo().usage.users.activeMonth
         mau = '{:,}'.format(mau).replace(',','.')
 
-        registers =self.bot.mastodon.instance().stats.user_count
+        registers = bot.mastodon.instance().stats.user_count
         registers = '{:,}'.format(registers).replace(',','.')
 
-        posts = self.bot.mastodon.instance().stats.status_count
+        posts = bot.mastodon.instance().stats.status_count
         posts = '{:,}'.format(posts).replace(',','.')
 
-        peers = self.bot.mastodon.instance().stats.domain_count
+        peers = bot.mastodon.instance().stats.domain_count
         peers = '{:,}'.format(peers).replace(',','.')
 
-        version = self.bot.mastodon.instance().version
+        version = bot.mastodon.instance().version
 
-        reg_open = self.bot.mastodon.instance_nodeinfo().openRegistrations
+        reg_open = bot.mastodon.instance_nodeinfo().openRegistrations
 
         if reg_open:
             opened = 'abierto'
         else:
             opened = 'cerrado'
 
-        post_text  = f", estado de {self.bot.mastodon_hostname}:\n\n"
+        post_text  = f", estado de {bot.mastodon_hostname}:\n\n"
         post_text += f"Usuarios registrados: {registers}\n"
         post_text += f"Usuarios activos (en el mes): {mau}\n"
         post_text += f"Apuntes: {posts}\n"
