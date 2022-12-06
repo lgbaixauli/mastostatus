@@ -2,9 +2,9 @@
 This code publish information of the Mastodon instance where the bot has its account, if requested.  
 Based in the 'info' bot of @spla@mastodont.cat (https://git.mastodont.cat/spla/info)
 
-The bot listen to 'frikistatus' word key:
+The bot listen a keyword key:
 
-@bot_username frikistatus
+@bot_username kewword
 
 and then reply following information:  
 
@@ -30,9 +30,11 @@ Within Python Virtual Environment:
 
 3. Run `pip install -r requirements.txt` to install needed libraries.  
 
-4. Run `python3 status.py` manually once to bot setup and get its access token to Mastodon instance.
+4. Choose the keyword an modify the `status.py` file.
 
-5. Use your favourite scheduling method to set `status.sh` to run every minute. For example, 
+5. Run `python3 status.py` manually once to bot setup and get its access token to Mastodon instance.
+
+6. Use your favourite scheduling method to set `status.sh` to run every minute. For example, 
    add  `* * * * * /home/user_name/mastostatus/status.sh 2>&1 | /usr/bin/logger -t MASTOSTATUS` in 
    `crontab -e`. The system and error log will be in `/var/log/syslog`. 
    Don't forgot the execution privilegies `chmod +x status.sh`. 
