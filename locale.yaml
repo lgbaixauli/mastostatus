@@ -1,0 +1,69 @@
+#######################################
+#    Locale for mastodon status bot   #
+#######################################
+
+abierto:
+  es: "abierto"
+  ca: "obert"
+  en: "opened"  
+  ga: "aberto"
+  
+cerrado:
+  es: "cerrado"
+  ca: "tancat"
+  en: "closed"  
+  ga: "pechado"
+
+estado:
+  es: "estado de"
+  ca: "estat de"
+  en: "status of"
+  ga: "estado"  
+
+
+registrados:
+  es: "Usuarios registrados"
+  ca: "Usuaris registrats"
+  en: "Registered users" 
+  ga: "Usuarios rexistrados" 
+
+activos:
+  es: "Usuarios activos (en el mes)"
+  ca: "Usuaris actius (en el mes)"
+  en: "Active users (in month)"  
+  ga: "Usuarios activos (no mes)"
+
+apuntes:
+  es: "Publicaciones"
+  ca: "Publicacions"
+  en: "Posts"  
+  ga: "Publicacións"
+
+federados:
+  es: "Servidores federados"
+  ca: "Servidors federats"
+  en: "Federated servers"  
+  ga: "Servidores federados"
+
+version:
+  es: "Versión de Mastodon"
+  ca: "Versió de Mastodon"
+  en: "Mastodon version"
+  ga: "Versión de Mastodon"
+    
+registro:
+  es: "Registro"
+  ca: "Registre"
+  en: "Register"  
+  ga: "Inscrición"
+mencion:
+  es: "Mencióname con la palabra"
+  ca: "Menciona'm amb la paraula"
+  en: "Mention me with the word"  
+  ga: "Mencioname coa palabra"
+
+respuesta:
+  es: "y te responderé con estos datos"
+  ca: "i et respondré amb aquestes dades"
+  en: "and I will reply you with these information"  
+  ga: "e responderei con estes detalles"
