@@ -1,5 +1,5 @@
 ###
-# Mastoquote, bot para publicar citas en Mastodon
+# Mastostatus, bot para publicar el estado de una instancia en Mastodon
 # Fork (cada vez más lejano) del bot "info" original de @spla@mastodont.cat
 # En https://git.mastodont.cat/spla/info
 ###  
