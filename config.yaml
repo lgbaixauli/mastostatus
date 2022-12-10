@@ -6,8 +6,8 @@
 app:
   # [String] Name of the app
   name: "state"
-  # [String] Kewword to check
-  keyword: "frikistatus"
+  # [String] Name of the actions file 
+  actions_file_name: "actions.yaml" 
 
 # Mastobot config
 bot:
@@ -16,7 +16,7 @@ bot:
   # [String]  Instance hostname 
   hostname: "frikiverse.zone"
   # [String] Access type: Access Token = "AT" | Credentials = "CR" 
-  access_type: "AT"
+  access_type: "CR"
 
 # Mastobot access token configuration
 access_token:
@@ -33,20 +33,24 @@ credentials:
   force_login: False
   # [String] Name of the secrets directory
   secrets_directory: "secrets"
-  # [String] Name of the secrets file path
-  secrets_file_path: "secrets.txt"
+  # [String] Name of the secrets file
+  secrets_file_name: "secrets.txt"
 
 # Testing options
 testing:
+  # [String] Test word in toot
+  text_word: "test"
+  # [Bool] Ignore test toots
+  ignore_test_toot: False
   # [Bool] Disable push the answer to Mastodon
-  disable_push_answer: False
-  # [Bool] Disable push the answer to Mastodon
-  disable_dismis_notification: False
+  disable_push_answer: True
+  # [Bool] Disable dismiss de the notification
+  disable_dismiss_notification: True
 
 # Logging config
 logger:
   # [Integer] Log level: NOTSET=0 | DEBUG=10 | INFO=20 | WARN=30 | ERROR=40 | CRITICAL=50
-  loglevel: 20
+  loglevel: 10
   # [String] Name of the logger
   name: "mastostatus_bot"
   # [Bool] Dump the log into a file
