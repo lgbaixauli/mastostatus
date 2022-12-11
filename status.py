@@ -1,5 +1,6 @@
 ###
-# Mastostatus, bot para publicar el estado de una instancia en Mastodon
+# Mastostatus, bot administrativo de una instancia. 
+# De momento publica el estado, pero está preparado para hacer más acciones a partir de keywords
 # Fork (cada vez más lejano) del bot "info" original de @spla@mastodont.cat
 # En https://git.mastodont.cat/spla/info
 ###  
@@ -130,7 +131,7 @@ class Runner:
         post_text += _text("federados") + ": " + posts + "\n"
         post_text += _text("version") + ": " + version + "\n"
         post_text += _text("registro") + ": " + opened + "\n\n"
-        post_text += "(" + _text("mencion") + " " + self._keyword + " " + _text("respuesta") + ")"
+        post_text += "(" + _text("mencion") + " " + keyword + " " + _text("respuesta") + ")"
 
         post_text = (post_text[:400] + '... ') if len(post_text) > 400 else post_text
 
