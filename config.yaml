@@ -6,8 +6,8 @@
 app:
   # [String] Name of the app
   name: "state"
-  # [String] Kewword to check
-  keyword: "frikistatus"
+  # [String] Name of the actions file 
+  actions_file_name: "actions.yaml" 
 
 # Mastobot config
 bot:
@@ -33,15 +33,19 @@ credentials:
   force_login: False
   # [String] Name of the secrets directory
   secrets_directory: "secrets"
-  # [String] Name of the secrets file path
-  secrets_file_path: "secrets.txt"
+  # [String] Name of the secrets file
+  secrets_file_name: "secrets.txt"
 
 # Testing options
 testing:
+  # [String] Test word in toot
+  text_word: "test"
+  # [Bool] Ignore test toots
+  ignore_test_toot: True
   # [Bool] Disable push the answer to Mastodon
   disable_push_answer: False
-  # [Bool] Disable push the answer to Mastodon
-  disable_dismis_notification: False
+  # [Bool] Disable dismiss de the notification
+  disable_dismiss_notification: False
 
 # Logging config
 logger:
