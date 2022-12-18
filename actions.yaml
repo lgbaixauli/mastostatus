@@ -2,5 +2,9 @@
 #  list of the actions the bot does   #
 #######################################
 
-instance_status:
+replay_status:
+    keyword: "frikistatus"
+
+write_status:
+    hours: ["00"] 
     keyword: "frikistatus"

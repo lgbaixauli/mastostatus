@@ -67,3 +67,10 @@ respuesta:
   ca: "i et respondré amb aquestes dades"
   en: "and I will reply you with these information"  
   gl: "e responderei con estes detalles"
+
+estado2:
+  es: "Estado de"
+  ca: "Estat de"
+  en: "Status of"
+  gl: "Estado"  
+

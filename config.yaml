@@ -8,6 +8,10 @@ app:
   name: "state"
   # [String] Name of the actions file 
   actions_file_name: "actions.yaml" 
+  # [String] Name of the output file 
+  output_file_name: "output.csv" 
+  # [String] Name of the output directory 
+  output_directory: "" 
 
 # Mastobot config
 bot:
@@ -16,7 +20,7 @@ bot:
   # [String]  Instance hostname 
   hostname: "frikiverse.zone"
   # [String] Access type: Access Token = "AT" | Credentials = "CR" 
-  access_type: "AT"
+  access_type: "CR"
 
 # Mastobot access token configuration
 access_token:
@@ -43,14 +47,18 @@ testing:
   # [Bool] Ignore test toots
   ignore_test_toot: True
   # [Bool] Disable post the answer to Mastodon
-  disable_post: False
+  disable_post: True
   # [Bool] Disable dismiss de the notification
-  disable_dismiss: False
+  disable_dismiss: True
+  # [Bool] Force write output file
+  force_programmer: True
+  # [Bool] disable write output file
+  disable_write: False
 
 # Logging config
 logger:
   # [Integer] Log level: NOTSET=0 | DEBUG=10 | INFO=20 | WARN=30 | ERROR=40 | CRITICAL=50
-  loglevel: 20
+  loglevel: 10
   # [String] Name of the logger
   name: "mastostatus_bot"
   # [Bool] Dump the log into a file

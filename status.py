@@ -6,11 +6,13 @@
 ###  
 
 from bundle.mastobot import Mastobot
+from bundle.programmer import Programmer
 from bundle.config import Config
-from bundle.logger import Logger
 from bundle.translator import Translator
+from bundle.logger import Logger
 
 import random
+import datetime
 
 BOT_NAME = "Statusbot"
 
@@ -22,15 +24,22 @@ class Bot(Mastobot):
 
         self.init_replay_bot()
         self.init_translator()
+        self.init_programmer()
+        self.init_output_file()
 
 
     def run(self, botname: str = BOT_NAME) -> None:
 
+        action   = self._actions["write_status"]   
+        if self.check_programmer(action["hours"], True):
+            self.write_output_file(self.find_row())
+            self.post_toot (self.find_text(None, action), "en", 0)
+     
+        action   = self._actions["replay_status"]   
         notifications = self.mastodon.notifications()
-
+ 
         for notif in notifications:
 
-            action   = self._actions["instance_status"]   
             replay, dismiss = self.process_notif(notif, "mention", action["keyword"])
             if replay:
                 self.replay_toot(self.find_text(notif, action), notif)
@@ -43,8 +52,13 @@ class Bot(Mastobot):
 
     def find_text(self, notif, action):        
 
-        language = notif.status.language
-        username = notif.account.acct
+        if notif == None:
+            language = "en" 
+            username = ""        
+        else:
+            language = notif.status.language
+            username = notif.account.acct
+        
         keyword  = action["keyword"]
         
         self._logger.debug("notif language: " + language)                    
@@ -72,20 +86,43 @@ class Bot(Mastobot):
         else:
             opened = _text ("cerrado")
 
-        post_text  = "@" + username + ", " +_text("estado") + " " + self._hostname + ":\n\n"
+        if username == "":
+            post_text  = _text("estado2") + " " + self._hostname + ":\n\n"
+        else:
+            post_text  = "@" + username + ", " +_text("estado") + " " + self._hostname + ":\n\n"
+        
         post_text += _text("registrados") + ": " + registers + "\n"
         post_text += _text("activos") + ": " + mau + "\n"
         post_text += _text("apuntes") + ": " + posts + "\n"
         post_text += _text("federados") + ": " + posts + "\n"
         post_text += _text("version") + ": " + version + "\n"
         post_text += _text("registro") + ": " + opened + "\n\n"
-        post_text += "(" + _text("mencion") + " " + keyword + " " + _text("respuesta") + ")"
+        post_text += "(" + _text("mencion") + " \"" + keyword + "\" " + _text("respuesta") + ")"
 
         post_text = (post_text[:400] + '... ') if len(post_text) > 400 else post_text
 
         self._logger.debug ("answer text\n" + post_text)
 
         return post_text
+
+
+    def find_row(self):        
+
+        now = datetime.datetime.now()
+        date = now.strftime('%Y-%m-%d')
+        time = now.strftime('%H:%M:%S')
+
+        mau       = str(self.mastodon.instance_nodeinfo().usage.users.activeMonth)
+        registers = str(self.mastodon.instance().stats.user_count)
+        posts     = str(self.mastodon.instance().stats.status_count)
+        peers     = str(self.mastodon.instance().stats.domain_count)
+ 
+        row = [date, time, mau, registers, posts, peers]
+
+        self._logger.debug ("row\n" + str(row))
+
+        return row
+
 
 
 # main
