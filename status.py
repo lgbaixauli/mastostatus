@@ -5,11 +5,11 @@
 # En https://git.mastodont.cat/spla/info
 ###  
 
-from bundle.mastobot import Mastobot
-from bundle.programmer import Programmer
-from bundle.config import Config
-from bundle.translator import Translator
-from bundle.logger import Logger
+from pybot.mastobot import Mastobot
+from pybot.programmer import Programmer
+from pybot.config import Config
+from pybot.translator import Translator
+from pybot.logger import Logger
 
 import random
 import datetime
