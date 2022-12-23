@@ -54,6 +54,10 @@ testing:
   force_programmer: False
   # [Bool] disable write output file
   disable_write: False
+  # [Bool] force private mention when post
+  force_mention: False
+  # [String] user to mention when force private
+  user_mention: "none"
 
 # Logging config
 logger:

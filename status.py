@@ -23,6 +23,7 @@ class Bot(Mastobot):
         super().__init__(botname = botname)
 
         self.init_replay_bot()
+        self.init_publish_bot()
         self.init_translator()
         self.init_programmer()
         self.init_output_file()
