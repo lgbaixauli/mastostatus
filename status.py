@@ -95,7 +95,7 @@ class Bot(Mastobot):
         post_text += _text("registrados") + ": " + registers + "\n"
         post_text += _text("activos") + ": " + mau + "\n"
         post_text += _text("apuntes") + ": " + posts + "\n"
-        post_text += _text("federados") + ": " + posts + "\n"
+        post_text += _text("federados") + ": " + peers + "\n"
         post_text += _text("version") + ": " + version + "\n"
         post_text += _text("registro") + ": " + opened + "\n\n"
         post_text += "(" + _text("mencion") + " \"" + keyword + "\" " + _text("respuesta") + ")"
